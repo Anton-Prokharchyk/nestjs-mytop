@@ -1,0 +1,24 @@
+{
+  "workbench.colorTheme": "Visual Studio Light",
+  "editor.formatOnPaste": true, // required
+  "editor.formatOnType": false, // required
+  "editor.formatOnSave": true, // optional
+  "prettier.enable": true,
+  "editor.formatOnSaveMode": "file", // required to format on save
+  "files.autoSave": "onFocusChange",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.auto": true,
+  "files.autoSaveDelay": 100,
+  "settingsSync.ignoredSettings": [],
+  "settingsSync.ignoredExtensions": [],
+  "editor.fontLigatures": false,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.maxTokenizationLineLength": 2500
+  },
+  "vs-code-prettier-eslint.prettierLast": true,
+  "prettier.endOfLine": "lf",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
