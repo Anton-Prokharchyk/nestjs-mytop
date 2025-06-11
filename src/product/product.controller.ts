@@ -10,16 +10,22 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { ProductModel } from './product.model';
+import { Product } from './product.model';
 import { FindProductDto } from './dto/find-product.dto';
+import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly configService: ConfigService) {
-    console.log(this.configService.get('PORT'));
-  }
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly productService: ProductService,
+  ) {}
   @Post('create')
-  async create(@Body() dto: Omit<ProductModel, '_id'>) {}
+  async create(@Body() dto: Omit<Product, '_id'>) {
+    console.log(this.configService.get('PORT'));
+    console.log(this.configService.get('PORT'));
+    return this.productService.create();
+  }
 
   @Get(':id')
   async get(@Param('id') id: string) {}
@@ -28,7 +34,7 @@ export class ProductController {
   async delete(@Param('id') id: string) {}
 
   @Patch(':id')
-  async patch(@Param('id') id: string, @Body() dto: ProductModel) {}
+  async patch(@Param('id') id: string, @Body() dto: Product) {}
 
   @HttpCode(200)
   @Post(':id')
