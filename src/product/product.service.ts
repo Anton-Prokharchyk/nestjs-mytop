@@ -10,10 +10,20 @@ export class ProductService {
     @InjectModel(Product.name) private productModel: Model<Product>,
   ) {}
 
-  async create() {
-    const newProduct = new this.productModel({});
-    console.log(Product.name);
-    console.log(newProduct);
+  async find(id: string) {
+    return this.productModel.findById(id);
+  }
+
+  async create(dto: Omit<Product, '_id'>): Promise<Product> {
+    const newProduct = new this.productModel({ dto });
     return newProduct.save();
+  }
+
+  async delete(id: string): Promise<Product | null> {
+    return this.productModel.findByIdAndDelete(id);
+  }
+
+  async patch(id: string, dto: Product): Promise<Product | null> {
+    return this.productModel.findByIdAndUpdate(id, dto, { new: true });
   }
 }
