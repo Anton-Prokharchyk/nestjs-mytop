@@ -1,7 +1,7 @@
-import { TopPageModel } from './top-page.model';
+import { TopPage } from './top-page.model';
 
-describe('TopPageModel', () => {
+describe('TopPage', () => {
   it('should be defined', () => {
-    expect(new TopPageModel()).toBeDefined();
+    expect(new TopPage()).toBeDefined();
   });
 });

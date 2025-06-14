@@ -1,5 +1,5 @@
-import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 
 export enum TopLevelCategory {
   Courses,
@@ -8,8 +8,10 @@ export enum TopLevelCategory {
   Products,
 }
 
+export type TopPageDocument = HydratedDocument<TopPage>;
+
 @Schema({ id: true })
-export class TopPageModel {
+export class TopPage {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     default: new mongoose.Types.ObjectId(),
@@ -25,10 +27,12 @@ export class TopPageModel {
   @Prop()
   category: string;
   @Prop({
-    count: Number,
-    juniorSalary: Number,
-    middleSalary: Number,
-    seniorSalary: Number,
+    type: {
+      count: Number,
+      juniorSalary: Number,
+      middleSalary: Number,
+      seniorSalary: Number,
+    },
   })
   hh?: {
     count: number;
@@ -46,4 +50,4 @@ export class TopPageModel {
   tags: string[];
 }
 
-export const TopPageModelSchema = SchemaFactory.createForClass(TopPageModel);
+export const TopPageSchema = SchemaFactory.createForClass(TopPage);
