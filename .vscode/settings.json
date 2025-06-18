@@ -20,6 +20,5 @@
   },
   "vs-code-prettier-eslint.prettierLast": true,
   "prettier.endOfLine": "lf",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "": ""
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
