@@ -12,12 +12,6 @@ export type TopPageDocument = HydratedDocument<TopPage>;
 
 @Schema({ id: true, timestamps: true })
 export class TopPage {
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-  })
-  _id: string;
-
   @Prop()
   firstCategory: TopLevelCategory;
   @Prop()
