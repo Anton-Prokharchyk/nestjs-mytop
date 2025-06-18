@@ -10,7 +10,7 @@ export enum TopLevelCategory {
 
 export type TopPageDocument = HydratedDocument<TopPage>;
 
-@Schema({ id: true })
+@Schema({ id: true, timestamps: true })
 export class TopPage {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
