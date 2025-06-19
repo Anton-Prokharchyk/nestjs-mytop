@@ -24,4 +24,14 @@ export class ReviewService {
   async patch(id: string, dto: Review): Promise<ReviewDocument | null> {
     return this.reviewModel.findByIdAndUpdate(id, dto, { new: true });
   }
+
+  async findByProductId(productId: string): Promise<ReviewDocument[]> {
+    return this.reviewModel.find({ productId });
+  }
+
+  async deleteByProductId(
+    productId: string,
+  ): Promise<{ deletedCount: number }> {
+    return this.reviewModel.deleteMany({ productId });
+  }
 }

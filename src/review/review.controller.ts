@@ -26,9 +26,23 @@ export class ReviewController {
     return this.reviewService.find(id);
   }
 
+  @Get('product/:productId')
+  async findByProductId(
+    @Param('productId') productId: string,
+  ): Promise<ReviewDocument[]> {
+    return this.reviewService.findByProductId(productId);
+  }
+
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.reviewService.delete(id);
+  }
+
+  @Delete('product/:productId')
+  async deleteByProductId(
+    @Param('productId') productId: string,
+  ): Promise<{ deletedCount: number }> {
+    return this.reviewService.deleteByProductId(productId);
   }
 
   @Patch(':id')
