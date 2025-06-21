@@ -8,6 +8,8 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { Review, ReviewDocument } from './review.model';
@@ -17,13 +19,15 @@ import {
   REVIEW_CANT_DELETE,
   REVIEW_CANT_FOUND,
 } from './review.constants';
+import { CreateReviewDto } from './dto/createReview.dto';
 
 @Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post('create')
-  async create(@Body() dto: Review): Promise<ReviewDocument> {
+  async create(@Body() dto: CreateReviewDto): Promise<ReviewDocument> {
     const createdReview: ReviewDocument = await this.reviewService.create(dto);
     if (!createdReview)
       throw new HttpException(REVIEW_CANT_CREATE, HttpStatus.BAD_REQUEST);
