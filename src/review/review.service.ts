@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { Review, ReviewDocument } from './review.model';
+import { CreateReviewDto } from './dto/createReview.dto';
 
 @Injectable()
 export class ReviewService {
@@ -12,7 +13,7 @@ export class ReviewService {
     return this.reviewModel.findById(id);
   }
 
-  async create(dto: Review): Promise<ReviewDocument> {
+  async create(dto: CreateReviewDto): Promise<ReviewDocument> {
     const newReview: ReviewDocument = new this.reviewModel(dto);
     return newReview.save();
   }
