@@ -1,7 +1,7 @@
-import { ReviewModel } from './review.model';
+import { Review } from './review.model';
 
-describe('ReviewModel', () => {
+describe('Review', () => {
   it('should be defined', () => {
-    expect(new ReviewModel()).toBeDefined();
+    expect(new Review()).toBeDefined();
   });
 });
