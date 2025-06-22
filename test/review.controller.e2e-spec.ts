@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { Server } from 'http';
+import mongoose, { disconnect } from 'mongoose';
 
 import { AppModule } from 'src/app.module';
 import { CreateReviewDto } from 'src/review/dto/createReview.dto';
@@ -14,8 +15,6 @@ const testReviewDto: CreateReviewDto = {
   description: 'description',
   productId: 'productId',
 };
-
-console.log(CreateReviewDto);
 
 describe('review controller', () => {
   let app: INestApplication;
@@ -31,7 +30,23 @@ describe('review controller', () => {
     server = app.getHttpServer() as Server;
   });
 
-  it('review/create (POST)', async () => {
+  afterAll(async () => {
+    await disconnect();
+  });
+
+  it('[POST]review/create - success', async () => {
+    const res = await request(server)
+      .post('/review/create')
+      .send(testReviewDto)
+      .expect(201);
+    const data = res.body as ReviewDocument;
+    expect(data).toMatchObject(testReviewDto);
+    expect(data._id).toBeDefined();
+    expect(data.createdAt).toBeDefined();
+    expect(data.updatedAt).toBeDefined();
+  });
+
+  it('[POST]review/create - fail', async () => {
     const res: request.Response = await request(server)
       .post('/review/create')
       .send(testReviewDto);
