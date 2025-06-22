@@ -5,25 +5,29 @@ import { Product } from '../product/product.model';
 
 @Schema({ id: true, timestamps: true })
 export class Review {
-  @Prop()
+  @Prop({ type: String })
   name: string;
 
-  @Prop()
+  @Prop({ type: String })
   description: string;
 
-  @Prop()
+  @Prop({ type: String })
   title: string;
 
-  @Prop()
+  @Prop({ required: true, min: 1, max: 5 })
   rating: number;
 
-  @Prop({ type: mongoose.Types.ObjectId, ref: Product.name })
+  @Prop({
+    type: mongoose.Types.ObjectId,
+    ref: Product.name,
+    required: true,
+  })
   productId: mongoose.Types.ObjectId;
 
-  @Prop()
+  @Prop({ type: Date })
   createdAt: Date;
 
-  @Prop()
+  @Prop({ type: Date })
   updatedAt: Date;
 }
 export type ReviewDocument = HydratedDocument<Review>;
