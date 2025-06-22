@@ -13,7 +13,6 @@ import { TopPageModule } from './top-page/top-page.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ConfigModule,
     MongooseModule.forRoot('mongodb://localhost:27017/nestjs-mytop'),
     ProductModule,
     AuthModule,

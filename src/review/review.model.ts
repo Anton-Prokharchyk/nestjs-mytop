@@ -3,7 +3,6 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 import { Product } from '../product/product.model';
 
-export type ReviewDocument = HydratedDocument<Review>;
 @Schema({ id: true, timestamps: true })
 export class Review {
   @Prop()
@@ -20,6 +19,13 @@ export class Review {
 
   @Prop({ type: mongoose.Types.ObjectId, ref: Product.name })
   productId: mongoose.Types.ObjectId;
+
+  @Prop()
+  createdAt: Date;
+
+  @Prop()
+  updatedAt: Date;
 }
+export type ReviewDocument = HydratedDocument<Review>;
 
 export const ReviewSchema = SchemaFactory.createForClass(Review);
