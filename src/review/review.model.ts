@@ -5,6 +5,8 @@ import { Product } from '../product/product.model';
 
 @Schema({ id: true, timestamps: true })
 export class Review {
+  _id: string;
+
   @Prop({ type: String })
   name: string;
 
@@ -24,10 +26,8 @@ export class Review {
   })
   productId: mongoose.Types.ObjectId;
 
-  @Prop({ type: Date })
   createdAt: Date;
 
-  @Prop({ type: Date })
   updatedAt: Date;
 }
 export type ReviewDocument = HydratedDocument<Review>;

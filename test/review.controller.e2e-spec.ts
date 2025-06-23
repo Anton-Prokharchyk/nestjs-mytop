@@ -2,18 +2,26 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { Server } from 'http';
-import mongoose, { disconnect } from 'mongoose';
+import { disconnect } from 'mongoose';
 
 import { AppModule } from 'src/app.module';
 import { CreateReviewDto } from 'src/review/dto/createReview.dto';
-import { ReviewDocument } from 'src/review/review.model';
+import { Review } from 'src/review/review.model';
 
-const testReviewDto: CreateReviewDto = {
+const testCreateReviewDto: CreateReviewDto = {
   rating: 1,
   name: 'name',
   title: 'title',
   description: 'description',
   productId: 'productId',
+};
+let testCreateReviewId: string;
+const testUpdatedReviewDto: CreateReviewDto = {
+  rating: 2,
+  name: 'name2',
+  title: 'title2',
+  description: 'description2',
+  productId: 'productId2',
 };
 
 describe('review controller', () => {
@@ -37,21 +45,33 @@ describe('review controller', () => {
   it('[POST]review/create - success', async () => {
     const res = await request(server)
       .post('/review/create')
-      .send(testReviewDto)
+      .send(testCreateReviewDto)
       .expect(201);
-    const data = res.body as ReviewDocument;
-    expect(data).toMatchObject(testReviewDto);
+    const data = res.body as Review;
+    expect(data).toMatchObject(testCreateReviewDto);
+    expect(data._id).toBeDefined();
+    testCreateReviewId = data._id;
+    expect(data.createdAt).toBeDefined();
+    expect(data.updatedAt).toBeDefined();
+  });
+
+  it('[GET]review/:id - success', async () => {
+    const res: request.Response = await request(server).get(
+      `/review/${testCreateReviewId}`,
+    );
+    const data = res.body as Review;
+    expect(data).toMatchObject(testCreateReviewDto);
     expect(data._id).toBeDefined();
     expect(data.createdAt).toBeDefined();
     expect(data.updatedAt).toBeDefined();
   });
 
-  it('[POST]review/create - fail', async () => {
+  it('[PATCH]review/:id - success', async () => {
     const res: request.Response = await request(server)
-      .post('/review/create')
-      .send(testReviewDto);
-    const data = res.body as ReviewDocument;
-    expect(data).toMatchObject(testReviewDto);
+      .patch(`/review/${testCreateReviewId}`)
+      .send(testUpdatedReviewDto);
+    const data = res.body as Review;
+    expect(data).toMatchObject(testUpdatedReviewDto);
     expect(data._id).toBeDefined();
     expect(data.createdAt).toBeDefined();
     expect(data.updatedAt).toBeDefined();
