@@ -7,22 +7,38 @@ import { disconnect } from 'mongoose';
 import { AppModule } from 'src/app.module';
 import { CreateReviewDto } from 'src/review/dto/createReview.dto';
 import { Review } from 'src/review/review.model';
+import { Product } from 'src/product/product.model';
 
-const testCreateReviewDto: CreateReviewDto = {
+const testCreateProduct = {
+  image: 'string',
+  title: 'string',
+  price: 1,
+  oldPrice: 1,
+  credit: 1,
+  calculatedRating: 1,
+  description: 'string',
+  advantages: 'string',
+  disAdvantages: 'string',
+  categories: ['string'],
+  tags: 'string',
+  characteristics: [{ name: 'name', value: 'value' }],
+};
+let testCreatedProductId: string;
+const testCreateReview: CreateReviewDto = {
   rating: 1,
   name: 'name',
   title: 'title',
   description: 'description',
-  productId: 'productId',
+  productId: 'testCreatedProductId',
 };
-let testCreateReviewId: string;
-const testUpdatedReviewDto: CreateReviewDto = {
+const testUpdatedReview: CreateReviewDto = {
   rating: 2,
   name: 'name2',
   title: 'title2',
   description: 'description2',
-  productId: 'productId2',
+  productId: 'testCreatedProductId',
 };
+let testFirstCreatedReview: Review;
 
 describe('review controller', () => {
   let app: INestApplication;
@@ -36,6 +52,16 @@ describe('review controller', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
     server = app.getHttpServer() as Server;
+
+    await (async () => {
+      const res: request.Response = await request(server)
+        .post('/product/create')
+        .send(testCreateProduct);
+      const createdProduct = res.body as Product;
+      testCreatedProductId = createdProduct._id;
+      testCreateReview.productId = testCreatedProductId;
+      testUpdatedReview.productId = testCreatedProductId;
+    })();
   });
 
   afterAll(async () => {
@@ -43,24 +69,29 @@ describe('review controller', () => {
   });
 
   it('[POST]review/create - success', async () => {
-    const res = await request(server)
+    let res: request.Response = await request(server)
       .post('/review/create')
-      .send(testCreateReviewDto)
+      .send(testCreateReview)
       .expect(201);
-    const data = res.body as Review;
-    expect(data).toMatchObject(testCreateReviewDto);
+    let data = res.body as Review;
+    expect(data).toMatchObject(testCreateReview);
     expect(data._id).toBeDefined();
-    testCreateReviewId = data._id;
+    testFirstCreatedReview = data;
     expect(data.createdAt).toBeDefined();
     expect(data.updatedAt).toBeDefined();
+    res = await request(server)
+      .post('/review/create')
+      .send(testCreateReview)
+      .expect(201);
+    data = res.body as Review;
   });
 
   it('[GET]review/:id - success', async () => {
     const res: request.Response = await request(server).get(
-      `/review/${testCreateReviewId}`,
+      `/review/${testFirstCreatedReview._id}`,
     );
     const data = res.body as Review;
-    expect(data).toMatchObject(testCreateReviewDto);
+    expect(data).toMatchObject(testCreateReview);
     expect(data._id).toBeDefined();
     expect(data.createdAt).toBeDefined();
     expect(data.updatedAt).toBeDefined();
@@ -68,12 +99,42 @@ describe('review controller', () => {
 
   it('[PATCH]review/:id - success', async () => {
     const res: request.Response = await request(server)
-      .patch(`/review/${testCreateReviewId}`)
-      .send(testUpdatedReviewDto);
+      .patch(`/review/${testFirstCreatedReview._id}`)
+      .send(testUpdatedReview);
     const data = res.body as Review;
-    expect(data).toMatchObject(testUpdatedReviewDto);
+    expect(data).toMatchObject(testUpdatedReview);
     expect(data._id).toBeDefined();
     expect(data.createdAt).toBeDefined();
     expect(data.updatedAt).toBeDefined();
+  });
+
+  it('[GET]review/product/:productId - success', async () => {
+    const res: request.Response = await request(server).get(
+      `/review/product/${testCreatedProductId}`,
+    );
+    const data = res.body as Review[];
+    const findedReview: Review = data[0];
+    expect(findedReview).toMatchObject(testUpdatedReview);
+    expect(findedReview._id).toEqual(testFirstCreatedReview._id);
+    expect(findedReview.createdAt).toEqual(testFirstCreatedReview.createdAt);
+    expect(findedReview.updatedAt).not.toEqual(
+      testFirstCreatedReview.updatedAt,
+    );
+  });
+
+  it('[DELETE]review/:reviewId - success', async () => {
+    const res: request.Response = await request(server).delete(
+      `/review/${testFirstCreatedReview._id}`,
+    );
+    const deletedReview = res.body as Review;
+    expect(deletedReview._id).toEqual(testFirstCreatedReview._id);
+  });
+
+  it('[DELETE]review/product/:productId - success', async () => {
+    const res: request.Response = await request(server).delete(
+      `/review/product/${testCreatedProductId}`,
+    );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    expect(res.body?.deletedCount).toEqual(1);
   });
 });

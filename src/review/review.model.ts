@@ -20,11 +20,11 @@ export class Review {
   rating: number;
 
   @Prop({
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: Product.name,
     required: true,
   })
-  productId: mongoose.Types.ObjectId;
+  productId: string;
 
   createdAt: Date;
 
