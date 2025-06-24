@@ -5,8 +5,6 @@ import { Server } from 'http';
 import { disconnect } from 'mongoose';
 
 import { AppModule } from 'src/app.module';
-import { CreateReviewDto } from 'src/review/dto/createReview.dto';
-import { Review } from 'src/review/review.model';
 import { Product } from 'src/product/product.model';
 
 const testCreateProduct = {
@@ -39,7 +37,6 @@ const testUpdateProduct = {
 };
 
 let testCreatedProduct: Product;
-let testUpdatedProduct: Product;
 
 describe('review controller', () => {
   let app: INestApplication;
