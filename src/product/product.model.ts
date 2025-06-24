@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type ProductDocument = HydratedDocument<Product>;
 
-class ProductCharacteristics {
+export class ProductCharacteristics {
   name: string;
   value: string;
 }
