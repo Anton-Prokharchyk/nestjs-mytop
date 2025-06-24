@@ -10,10 +10,6 @@ class ProductCharacteristics {
 
 @Schema({ id: true, timestamps: true })
 export class Product {
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-  })
   _id: string;
 
   @Prop()
