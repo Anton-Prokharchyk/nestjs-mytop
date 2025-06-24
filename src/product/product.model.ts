@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -8,49 +8,49 @@ class ProductCharacteristics {
   value: string;
 }
 
-@Schema({ id: true })
+@Schema({ id: true, timestamps: true })
 export class Product {
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-  })
   _id: string;
 
-  @Prop()
+  @Prop({ type: String })
   image: string;
 
-  @Prop()
+  @Prop({ type: String })
   title: string;
 
-  @Prop()
+  @Prop({ type: Number })
   price: number;
 
-  @Prop()
+  @Prop({ type: Number })
   oldPrice: number;
 
-  @Prop()
+  @Prop({ type: Number })
   credit: number;
 
-  @Prop()
+  @Prop({ type: Number })
   calculatedRating: number;
 
-  @Prop()
+  @Prop({ type: String })
   description: string;
 
-  @Prop()
+  @Prop({ type: String })
   advantages: string;
 
-  @Prop()
+  @Prop({ type: String })
   disAdvantages: string;
 
   @Prop([String])
   categories: string[];
 
-  @Prop()
+  @Prop({ type: String })
   tags: string;
 
   @Prop([ProductCharacteristics])
   characteristics: ProductCharacteristics[];
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
