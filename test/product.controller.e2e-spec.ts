@@ -94,11 +94,11 @@ describe('review controller', () => {
     expect(data.updatedAt).toBeDefined();
   });
 
-  // it('[DELETE]product/:productId - success', async () => {
-  //   const res: request.Response = await request(server).delete(
-  //     `/product/${testCreatedProduct._id}`,
-  //   );
-  //   const deletedProduct = res.body as Product;
-  //   expect(deletedProduct._id).toEqual(testCreatedProduct._id);
-  // });
+  it('[DELETE]product/:productId - success', async () => {
+    const res: request.Response = await request(server).delete(
+      `/product/${testCreatedProduct._id}`,
+    );
+    const deletedProduct = res.body as Product;
+    expect(deletedProduct._id).toEqual(testCreatedProduct._id);
+  });
 });
