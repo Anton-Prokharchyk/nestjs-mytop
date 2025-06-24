@@ -8,6 +8,7 @@ import { AppModule } from 'src/app.module';
 import { CreateReviewDto } from 'src/review/dto/createReview.dto';
 import { Review } from 'src/review/review.model';
 import { Product } from 'src/product/product.model';
+import { UpdateReviewDto } from 'src/review/dto/updateReview.dto';
 
 const testCreateProduct = {
   image: 'string',
@@ -31,12 +32,11 @@ const testCreateReview: CreateReviewDto = {
   description: 'description',
   productId: 'testCreatedProductId',
 };
-const testUpdatedReview: CreateReviewDto = {
+const testUpdatedReview: UpdateReviewDto = {
   rating: 2,
   name: 'name2',
   title: 'title2',
   description: 'description2',
-  productId: 'testCreatedProductId',
 };
 let testFirstCreatedReview: Review;
 
@@ -60,7 +60,6 @@ describe('review controller', () => {
       const createdProduct = res.body as Product;
       testCreatedProductId = createdProduct._id;
       testCreateReview.productId = testCreatedProductId;
-      testUpdatedReview.productId = testCreatedProductId;
     })();
   });
 
