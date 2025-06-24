@@ -8,7 +8,7 @@ class ProductCharacteristics {
   value: string;
 }
 
-@Schema({ id: true })
+@Schema({ id: true, timestamps: true })
 export class Product {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -51,6 +51,10 @@ export class Product {
 
   @Prop([ProductCharacteristics])
   characteristics: ProductCharacteristics[];
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
