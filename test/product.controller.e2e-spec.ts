@@ -58,22 +58,22 @@ describe('review controller', () => {
       .expect(201);
     const data = res.body as Product;
     expect(data).toMatchObject(testCreateProduct);
+    expect(data._id).toBeDefined();
+    expect(data.createdAt).toBeDefined();
+    expect(data.updatedAt).toBeDefined();
     testCreatedProduct = data;
+  });
+
+  it('[GET]product/:id - success', async () => {
+    const res: request.Response = await request(server).get(
+      `/product/${testCreatedProduct._id}`,
+    );
+    const data = res.body as Product;
+    expect(data).toMatchObject(testCreatedProduct);
     expect(data._id).toBeDefined();
     expect(data.createdAt).toBeDefined();
     expect(data.updatedAt).toBeDefined();
   });
-
-  // it('[GET]review/:id - success', async () => {
-  //   const res: request.Response = await request(server).get(
-  //     `/review/${testFirstCreatedReview._id}`,
-  //   );
-  //   const data = res.body as Review;
-  //   expect(data).toMatchObject(testCreateReview);
-  //   expect(data._id).toBeDefined();
-  //   expect(data.createdAt).toBeDefined();
-  //   expect(data.updatedAt).toBeDefined();
-  // });
 
   // it('[PATCH]review/:id - success', async () => {
   //   const res: request.Response = await request(server)

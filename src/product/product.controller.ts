@@ -22,7 +22,6 @@ export class ProductController {
 
   @Get(':id')
   async findByid(@Param('id') id: string) {
-    console.log(id);
     return this.productService.find(id);
   }
 
