@@ -23,15 +23,23 @@ const testCreateProduct = {
   tags: 'string',
   characteristics: [{ name: 'name', value: 'value' }],
 };
-
-const testUpdatedProduct = {
-  rating: 2,
-  name: 'name2',
-  title: 'title2',
-  description: 'description2',
-  productId: 'testCreatedProductId',
+const testUpdateProduct = {
+  image: 'string1',
+  title: 'string1',
+  price: 2,
+  oldPrice: 2,
+  credit: 2,
+  calculatedRating: 2,
+  description: 'string1',
+  advantages: 'string1',
+  disAdvantages: 'string1',
+  categories: ['string1'],
+  tags: 'string1',
+  characteristics: [{ name: 'name1', value: 'value1' }],
 };
+
 let testCreatedProduct: Product;
+let testUpdatedProduct: Product;
 
 describe('review controller', () => {
   let app: INestApplication;
@@ -75,44 +83,22 @@ describe('review controller', () => {
     expect(data.updatedAt).toBeDefined();
   });
 
-  // it('[PATCH]review/:id - success', async () => {
-  //   const res: request.Response = await request(server)
-  //     .patch(`/review/${testFirstCreatedReview._id}`)
-  //     .send(testUpdatedReview);
-  //   const data = res.body as Review;
-  //   expect(data).toMatchObject(testUpdatedReview);
-  //   expect(data._id).toBeDefined();
-  //   expect(data.createdAt).toBeDefined();
-  //   expect(data.updatedAt).toBeDefined();
-  // });
+  it('[PATCH]product/:id - success', async () => {
+    const res: request.Response = await request(server)
+      .patch(`/product/${testCreatedProduct._id}`)
+      .send(testUpdateProduct);
+    const data = res.body as Product;
+    expect(data).toMatchObject(testUpdateProduct);
+    expect(data._id).toBeDefined();
+    expect(data.createdAt).toBeDefined();
+    expect(data.updatedAt).toBeDefined();
+  });
 
-  // it('[GET]review/product/:productId - success', async () => {
-  //   const res: request.Response = await request(server).get(
-  //     `/review/product/${testCreatedProductId}`,
-  //   );
-  //   const data = res.body as Review[];
-  //   const findedReview: Review = data[0];
-  //   expect(findedReview).toMatchObject(testUpdatedReview);
-  //   expect(findedReview._id).toEqual(testFirstCreatedReview._id);
-  //   expect(findedReview.createdAt).toEqual(testFirstCreatedReview.createdAt);
-  //   expect(findedReview.updatedAt).not.toEqual(
-  //     testFirstCreatedReview.updatedAt,
-  //   );
-  // });
-
-  // it('[DELETE]review/:reviewId - success', async () => {
+  // it('[DELETE]product/:productId - success', async () => {
   //   const res: request.Response = await request(server).delete(
-  //     `/review/${testFirstCreatedReview._id}`,
+  //     `/product/${testCreatedProduct._id}`,
   //   );
-  //   const deletedReview = res.body as Review;
-  //   expect(deletedReview._id).toEqual(testFirstCreatedReview._id);
-  // });
-
-  // it('[DELETE]review/product/:productId - success', async () => {
-  //   const res: request.Response = await request(server).delete(
-  //     `/review/product/${testCreatedProductId}`,
-  //   );
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  //   expect(res.body?.deletedCount).toEqual(1);
+  //   const deletedProduct = res.body as Product;
+  //   expect(deletedProduct._id).toEqual(testCreatedProduct._id);
   // });
 });
