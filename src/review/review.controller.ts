@@ -11,6 +11,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { DeleteResult } from 'mongoose';
 
 import { Review, ReviewDocument } from './review.model';
 import { ReviewService } from './review.service';
@@ -65,7 +66,7 @@ export class ReviewController {
   @Delete('product/:productId')
   async deleteByProductId(
     @Param('productId') productId: string,
-  ): Promise<{ deletedCount: number }> {
+  ): Promise<DeleteResult> {
     const deletedCount = await this.reviewService.deleteByProductId(productId);
     if (!deletedCount)
       throw new HttpException(REVIEW_CANT_CREATE, HttpStatus.BAD_REQUEST);

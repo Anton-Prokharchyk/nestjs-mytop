@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { Server } from 'http';
-import { disconnect } from 'mongoose';
+import { DeleteResult, disconnect } from 'mongoose';
 
 import { AppModule } from 'src/app.module';
 import { CreateReviewDto } from 'src/review/dto/createReview.dto';
@@ -134,7 +134,7 @@ describe('review controller', () => {
     const res: request.Response = await request(server).delete(
       `/review/product/${testCreatedProductId}`,
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    expect(res.body?.deletedCount).toEqual(1);
+    const data = res.body as DeleteResult;
+    expect(data.deletedCount).toEqual(1);
   });
 });
