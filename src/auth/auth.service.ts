@@ -12,7 +12,6 @@ import { User, UserDocument } from './user.model';
 import { RegistrationDto } from './dto/registration.dto';
 import { USER_NOT_FOUND_ERROR, WORNG_PASSWORD_ERROR } from './auth.constants';
 
-const secret: string = 'secret';
 const genSaltRounds: number = 10;
 
 @Injectable()
@@ -44,6 +43,10 @@ export class AuthService {
     password: string,
     hashPassword: string,
   ): Promise<boolean> {
+    return compare(password, hashPassword);
+  }
+
+  async signJwt(password: string, hashPassword: string): Promise<boolean> {
     return compare(password, hashPassword);
   }
 

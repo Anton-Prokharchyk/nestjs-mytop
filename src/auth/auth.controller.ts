@@ -11,6 +11,7 @@ import {
 import { RegistrationDto } from './dto/registration.dto';
 import { AuthService } from './auth.service';
 import { USER_ALREADY_EXISTS_ERROR } from './auth.constants';
+import { UserDocument } from './user.model';
 
 @Controller('auth')
 export class AuthController {
@@ -29,6 +30,8 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() dto: RegistrationDto) {
-    const validatedUser = await this.authService.validateUser(dto);
+    const validatedUser: UserDocument =
+      await this.authService.validateUser(dto);
+    return validatedUser;
   }
 }
