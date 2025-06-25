@@ -18,12 +18,14 @@ import {
   TOP_PAGE_CANT_FOUND,
   TOP_PAGE_CANT_UPDATE,
 } from './top-page.constants';
+import { UpdateTopPageDto } from './dto/update-top-page.dto';
+import { CreateTopPageDto } from './dto/create-top-page.dto';
 
 @Controller('top-page')
 export class TopPageController {
   constructor(private readonly topPageService: TopPageService) {}
   @Post('create')
-  async create(@Body() dto: Omit<TopPage, '_id'>): Promise<TopPage> {
+  async create(@Body() dto: CreateTopPageDto): Promise<TopPage> {
     const created = await this.topPageService.create(dto);
     if (!created) {
       throw new HttpException(TOP_PAGE_CANT_CREATE, HttpStatus.BAD_REQUEST);
@@ -50,7 +52,7 @@ export class TopPageController {
   }
 
   @Patch(':id')
-  async patch(@Param('id') id: string, @Body() dto: TopPage) {
+  async patch(@Param('id') id: string, @Body() dto: UpdateTopPageDto) {
     const updated = await this.topPageService.patch(id, dto);
     if (!updated) {
       throw new HttpException(TOP_PAGE_CANT_UPDATE, HttpStatus.BAD_REQUEST);
