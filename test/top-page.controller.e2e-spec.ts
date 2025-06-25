@@ -97,11 +97,11 @@ describe('review controller', () => {
     expect(data.updatedAt).toBeDefined();
   });
 
-  // it('[DELETE]top-page/:top-pageId - success', async () => {
-  //   const res: request.Response = await request(server).delete(
-  //     `/top-page/${testCreatedProduct._id}`,
-  //   );
-  //   const deletedProduct = res.body as Product;
-  //   expect(deletedProduct._id).toEqual(testCreatedProduct._id);
-  // });
+  it('[DELETE]top-page/:top-pageId - success', async () => {
+    const res: request.Response = await request(server).delete(
+      `/top-page/${testCreatedTopPage._id}`,
+    );
+    const deletedProduct = res.body as TopPage;
+    expect(deletedProduct._id).toEqual(testCreatedTopPage._id);
+  });
 });
