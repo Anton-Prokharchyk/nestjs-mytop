@@ -19,8 +19,8 @@ export class AuthService {
     email,
     password,
   }: RegistrationDto): Promise<UserDocument | null> {
-    const isUserExist = await this.userModel.find({ email });
-    if (isUserExist.length) return null;
+    const foundedUsers = await this.findUserByEmail(email);
+    if (foundedUsers.length) return null;
     console.log('after');
     const salt = await genSalt(genSaltRounds);
     const createdPassHash = await hash(password, salt);
@@ -28,5 +28,8 @@ export class AuthService {
       email,
       passwordHash: createdPassHash,
     });
+  }
+  async findUserByEmail(email: string): Promise<UserDocument[]> {
+    return this.userModel.find({ email });
   }
 }
