@@ -86,16 +86,16 @@ describe('review controller', () => {
     expect(data.updatedAt).toBeDefined();
   });
 
-  // it('[PATCH]top-page/:id - success', async () => {
-  //   const res: request.Response = await request(server)
-  //     .patch(`/top-page/${testCreatedProduct._id}`)
-  //     .send(testUpdateProduct);
-  //   const data = res.body as Product;
-  //   expect(data).toMatchObject(testUpdateProduct);
-  //   expect(data._id).toBeDefined();
-  //   expect(data.createdAt).toBeDefined();
-  //   expect(data.updatedAt).toBeDefined();
-  // });
+  it('[PATCH]top-page/:id - success', async () => {
+    const res: request.Response = await request(server)
+      .patch(`/top-page/${testCreatedTopPage._id}`)
+      .send(testUpdateTopPage);
+    const data = res.body as TopPage;
+    expect(data).toMatchObject(testUpdateTopPage);
+    expect(data._id).toBeDefined();
+    expect(data.createdAt).toBeDefined();
+    expect(data.updatedAt).toBeDefined();
+  });
 
   // it('[DELETE]top-page/:top-pageId - success', async () => {
   //   const res: request.Response = await request(server).delete(
