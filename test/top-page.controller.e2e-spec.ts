@@ -75,16 +75,16 @@ describe('review controller', () => {
     testCreatedTopPage = data;
   });
 
-  // it('[GET]top-page/:id - success', async () => {
-  //   const res: request.Response = await request(server).get(
-  //     `/top-page/${testCreatedProduct._id}`,
-  //   );
-  //   const data = res.body as Product;
-  //   expect(data).toMatchObject(testCreatedProduct);
-  //   expect(data._id).toBeDefined();
-  //   expect(data.createdAt).toBeDefined();
-  //   expect(data.updatedAt).toBeDefined();
-  // });
+  it('[GET]top-page/:id - success', async () => {
+    const res: request.Response = await request(server).get(
+      `/top-page/${testCreatedTopPage._id}`,
+    );
+    const data = res.body as TopPage;
+    expect(data).toMatchObject(testCreatedTopPage);
+    expect(data._id).toBeDefined();
+    expect(data.createdAt).toBeDefined();
+    expect(data.updatedAt).toBeDefined();
+  });
 
   // it('[PATCH]top-page/:id - success', async () => {
   //   const res: request.Response = await request(server)
