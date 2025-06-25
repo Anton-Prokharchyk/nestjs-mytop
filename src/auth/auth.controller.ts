@@ -15,6 +15,7 @@ import { USER_ALREADY_EXISTS_ERROR } from './auth.constants';
 @Controller('auth')
 export class AuthController {
   constructor(@Inject() private readonly authService: AuthService) {}
+
   @Post('registration')
   async register(@Body() dto: RegistrationDto) {
     const createdUser = await this.authService.createUser(dto);
@@ -26,7 +27,8 @@ export class AuthController {
     return createdUser;
   }
 
-  @HttpCode(200)
   @Post('login')
-  async login(@Body() dto: RegistrationDto) {}
+  async login(@Body() dto: RegistrationDto) {
+    const validatedUser = await this.authService.validateUser(dto);
+  }
 }
