@@ -1,4 +1,4 @@
-import { Auth } from './auth.model';
+import { Auth } from './user.model';
 
 describe('Auth', () => {
   it('should be defined', () => {

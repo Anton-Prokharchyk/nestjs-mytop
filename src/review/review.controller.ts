@@ -16,9 +16,9 @@ import { DeleteResult } from 'mongoose';
 import { Review, ReviewDocument } from './review.model';
 import { ReviewService } from './review.service';
 import {
-  REVIEW_CANT_CREATE,
-  REVIEW_CANT_DELETE,
-  REVIEW_CANT_FOUND,
+  REVIEW_CANT_CREATE_ERROR,
+  REVIEW_CANT_DELETE_ERROR,
+  REVIEW_CANT_FOUND_ERROR,
 } from './review.constants';
 import { CreateReviewDto } from './dto/createReview.dto';
 
@@ -31,7 +31,7 @@ export class ReviewController {
   async create(@Body() dto: CreateReviewDto): Promise<ReviewDocument> {
     const createdReview: ReviewDocument = await this.reviewService.create(dto);
     if (!createdReview)
-      throw new HttpException(REVIEW_CANT_CREATE, HttpStatus.BAD_REQUEST);
+      throw new HttpException(REVIEW_CANT_CREATE_ERROR, HttpStatus.BAD_REQUEST);
     return createdReview;
   }
 
@@ -39,7 +39,7 @@ export class ReviewController {
   async findByid(@Param('id') id: string) {
     const review = await this.reviewService.find(id);
     if (!review)
-      throw new HttpException(REVIEW_CANT_FOUND, HttpStatus.NOT_FOUND);
+      throw new HttpException(REVIEW_CANT_FOUND_ERROR, HttpStatus.NOT_FOUND);
     return review;
   }
 
@@ -49,7 +49,7 @@ export class ReviewController {
   ): Promise<ReviewDocument[]> {
     const reviews = await this.reviewService.findByProductId(productId);
     if (!reviews)
-      throw new HttpException(REVIEW_CANT_FOUND, HttpStatus.BAD_REQUEST);
+      throw new HttpException(REVIEW_CANT_FOUND_ERROR, HttpStatus.BAD_REQUEST);
 
     return reviews;
   }
@@ -58,7 +58,7 @@ export class ReviewController {
   async delete(@Param('id') id: string) {
     const deletedReview = await this.reviewService.delete(id);
     if (!deletedReview)
-      throw new HttpException(REVIEW_CANT_DELETE, HttpStatus.NOT_FOUND);
+      throw new HttpException(REVIEW_CANT_DELETE_ERROR, HttpStatus.NOT_FOUND);
 
     return deletedReview;
   }
@@ -69,7 +69,7 @@ export class ReviewController {
   ): Promise<DeleteResult> {
     const deletedCount = await this.reviewService.deleteByProductId(productId);
     if (!deletedCount)
-      throw new HttpException(REVIEW_CANT_CREATE, HttpStatus.BAD_REQUEST);
+      throw new HttpException(REVIEW_CANT_CREATE_ERROR, HttpStatus.BAD_REQUEST);
     return deletedCount;
   }
 
@@ -80,7 +80,7 @@ export class ReviewController {
   ): Promise<ReviewDocument | null> {
     const updatedReview = await this.reviewService.patch(id, dto);
     if (!updatedReview)
-      throw new HttpException(REVIEW_CANT_CREATE, HttpStatus.BAD_REQUEST);
+      throw new HttpException(REVIEW_CANT_CREATE_ERROR, HttpStatus.BAD_REQUEST);
     return updatedReview;
   }
 }
