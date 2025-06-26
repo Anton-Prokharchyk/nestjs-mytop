@@ -38,7 +38,7 @@ const testUpdateProduct = {
 
 let testCreatedProduct: Product;
 
-describe('review controller', () => {
+describe('product controller', () => {
   let app: INestApplication;
   let server: Server;
 

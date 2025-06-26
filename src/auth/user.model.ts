@@ -15,7 +15,7 @@ export class User {
 
   createdAt: Date;
 
-  udpatedAt: Date;
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

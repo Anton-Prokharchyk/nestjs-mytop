@@ -7,10 +7,8 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { ProductDocument } from './product.model';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';

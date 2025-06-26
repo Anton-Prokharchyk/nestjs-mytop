@@ -44,7 +44,7 @@ const testUpdateTopPage: UpdateTopPageDto = {
 
 let testCreatedTopPage: TopPage;
 
-describe('review controller', () => {
+describe('top-page controller', () => {
   let app: INestApplication;
   let server: Server;
 

@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { genSalt, hash, compare } from 'bcryptjs';
@@ -26,7 +21,6 @@ export class AuthService {
   }: RegistrationDto): Promise<UserDocument | null> {
     const foundedUsers = await this.findUserByEmail(email);
     if (foundedUsers.length) return null;
-    console.log('after');
     const salt = await genSalt(genSaltRounds);
     const createdPassHash = await hash(password, salt);
     return await this.userModel.create({
