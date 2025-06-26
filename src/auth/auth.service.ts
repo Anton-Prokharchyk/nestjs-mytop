@@ -46,10 +46,6 @@ export class AuthService {
     return compare(password, hashPassword);
   }
 
-  async signJwt(password: string, hashPassword: string): Promise<boolean> {
-    return compare(password, hashPassword);
-  }
-
   async validateUser({
     email,
     password,
