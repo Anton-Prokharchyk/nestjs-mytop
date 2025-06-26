@@ -3,11 +3,14 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { ProductDocument } from './product.model';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -23,8 +26,12 @@ export class ProductController {
   }
 
   @Get(':id')
-  async findByid(@Param('id') id: string): Promise<ProductDocument | null> {
-    return this.productService.find(id);
+  async findByid(@Param('id') id: string): Promise<ProductDocument> {
+    const product = await this.productService.find(id);
+    if (!product) {
+      throw new HttpException('Product not found', 404);
+    }
+    return product;
   }
 
   @Delete(':id')

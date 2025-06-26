@@ -6,12 +6,12 @@ import {
   Inject,
   Post,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { RegistrationDto } from './dto/registration.dto';
 import { AuthService } from './auth.service';
 import { USER_ALREADY_EXISTS_ERROR } from './auth.constants';
 import { UserDocument } from './user.model';
-import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class AuthController {
