@@ -28,8 +28,5 @@ const getMongoDbUri = (configService: ConfigService): string => {
 };
 
 const getMongoDbOptions = () => {
-  return {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  };
+  return {};
 };
