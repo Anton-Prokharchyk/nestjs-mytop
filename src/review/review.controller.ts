@@ -21,6 +21,7 @@ import {
   REVIEW_CANT_FOUND_ERROR,
 } from './review.constants';
 import { CreateReviewDto } from './dto/createReview.dto';
+import { IdValidationPipe } from 'src/pipes/id-validation.pipe';
 
 @Controller('review')
 export class ReviewController {
@@ -36,7 +37,7 @@ export class ReviewController {
   }
 
   @Get(':id')
-  async findByid(@Param('id') id: string) {
+  async findByid(@Param('id', IdValidationPipe) id: string) {
     const review = await this.reviewService.find(id);
     if (!review)
       throw new HttpException(REVIEW_CANT_FOUND_ERROR, HttpStatus.NOT_FOUND);
@@ -55,7 +56,7 @@ export class ReviewController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', IdValidationPipe) id: string) {
     const deletedReview = await this.reviewService.delete(id);
     if (!deletedReview)
       throw new HttpException(REVIEW_CANT_DELETE_ERROR, HttpStatus.NOT_FOUND);

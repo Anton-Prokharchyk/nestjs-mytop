@@ -13,6 +13,7 @@ import { ProductDocument } from './product.model';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { IdValidationPipe } from '../pipes/id-validation.pipe';
 
 @Controller('product')
 export class ProductController {
@@ -24,7 +25,9 @@ export class ProductController {
   }
 
   @Get(':id')
-  async findByid(@Param('id') id: string): Promise<ProductDocument> {
+  async findByid(
+    @Param('id', IdValidationPipe) id: string,
+  ): Promise<ProductDocument> {
     const product = await this.productService.find(id);
     if (!product) {
       throw new HttpException('Product not found', 404);
@@ -33,7 +36,9 @@ export class ProductController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<ProductDocument | null> {
+  async delete(
+    @Param('id', IdValidationPipe) id: string,
+  ): Promise<ProductDocument | null> {
     return this.productService.delete(id);
   }
 
