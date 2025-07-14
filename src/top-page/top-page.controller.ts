@@ -20,6 +20,7 @@ import {
 } from './top-page.constants';
 import { UpdateTopPageDto } from './dto/update-top-page.dto';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
+import { IdValidationPipe } from 'src/pipes/id-validation.pipe';
 
 @Controller('top-page')
 export class TopPageController {
@@ -34,7 +35,7 @@ export class TopPageController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string) {
+  async findById(@Param('id', IdValidationPipe) id: string) {
     const found = await this.topPageService.find(id);
     if (!found) {
       throw new HttpException(TOP_PAGE_CANT_FOUND, HttpStatus.NOT_FOUND);
@@ -43,7 +44,7 @@ export class TopPageController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', IdValidationPipe) id: string) {
     const deleted = await this.topPageService.delete(id);
     if (!deleted) {
       throw new HttpException(TOP_PAGE_CANT_DELETE, HttpStatus.BAD_REQUEST);
