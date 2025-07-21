@@ -1,0 +1,8 @@
+version: '2.38.2'
+services:
+  backend-nestjs-mytop:
+    image: nestjs-mytop:latest
+    container_name: nestjs-mytop
+    restart: always
+    ports:
+      - 3001:3000
